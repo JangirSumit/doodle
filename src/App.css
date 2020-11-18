@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.react-calendar {
+  margin-bottom: 1rem;
+}
+
+.card {
+  padding: 2rem;
+}
+
+.row {
+  margin-bottom: 1rem;
+}
+
+.react-calendar {
+  margin: auto;
+  width: 100%;
+}
+
+header {
+  margin: auto;
+  font-weight: 700;
+  background: linear-gradient(130deg, #3c91e7 0, #78378c 100%);
+  text-align: center;
+  font-size: 35px;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.react-calendar__navigation__label {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+  .App {
+    text-align: left;
+    margin: auto;
+    width: 95%;
+    background: #f8fafc;
+  }
+
+  header {
+    height: 60px;
+    line-height: 60px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .App {
+    text-align: left;
+    margin: auto;
+    width: 70%;
+    background: #f8fafc;
+  }
+
+  header {
+    height: 100px;
+    line-height: 100px;
+  }
+}
