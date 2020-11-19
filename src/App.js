@@ -8,7 +8,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 function App() {
   const [date, setDate] = useState(formatDate(new Date()));
-  const [notes, setNotes] = useState(localStorage.getItem("notes"));
+  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")));
   const [showAddNote, setShowAddNote] = useState(true);
   const [showUpdateNote, setShowUpdateNote] = useState(false);
 
@@ -16,7 +16,23 @@ function App() {
     setDate(formatDate(date));
   }
 
-  function onAdd(params) {}
+  function onAddClick(data) {
+    let notes = localStorage.getItem("notes");
+    let newNotes = [];
+    if (notes && notes.length) {
+      localStorage.removeItem("notes");
+    }
+
+    if (!notes) {
+      newNotes = [data];
+    } else {
+      notes = JSON.parse(notes);
+      newNotes = [...notes, data];
+    }
+
+    localStorage.setItem("notes", JSON.stringify(newNotes));
+    setNotes(newNotes);
+  }
 
   function formatDate(date) {
     return date.toLocaleDateString("en-IN", {
@@ -41,7 +57,13 @@ function App() {
           </Row>
           <Row>
             <Col xs={12} md={6}>
-              {showAddNote && <AddUpdateNote isCreate={true} date={date} />}
+              {showAddNote && (
+                <AddUpdateNote
+                  isCreate={true}
+                  date={date}
+                  onAddClick={onAddClick}
+                />
+              )}
             </Col>
             <Col xs={12} md={6}>
               {showUpdateNote && <AddUpdateNote date={date} />}

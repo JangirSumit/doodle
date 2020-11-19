@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+body {
+  background: #f8fafc;
+}
+
 .react-calendar {
   margin-bottom: 1rem;
 }
@@ -34,30 +38,44 @@ header {
   font-weight: bold;
 }
 
-@media screen and (max-width: 600px) {
+.notes-wrapper .note {
+  width: 99%;
+  max-width: 99%;
+}
+
+@media screen and (max-width: 1200px) {
   .App {
     text-align: left;
     margin: auto;
     width: 95%;
-    background: #f8fafc;
   }
 
   header {
     height: 60px;
     line-height: 60px;
   }
+
+  .react-calendar {
+    margin-bottom: 1rem;
+  }
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 1200px) {
   .App {
     text-align: left;
     margin: auto;
     width: 70%;
-    background: #f8fafc;
   }
 
   header {
     height: 100px;
     line-height: 100px;
   }
+}
+
+.notes-wrapper {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 344px;
+  padding: 1rem;
 }

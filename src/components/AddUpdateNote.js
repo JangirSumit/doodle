@@ -4,9 +4,9 @@ import { Button, Card, Form } from "react-bootstrap";
 function AddUpdateNote(props) {
   function onAddClick() {
     props.onAddClick({
-      title: document.getElementById("formTitle"),
-      description: document.getElementById("formDescription"),
-      date: props.selectedDate,
+      title: document.getElementById("formTitle").value,
+      description: document.getElementById("formDescription").value,
+      date: props.date,
     });
   }
   function onAddDiscardClick() {}
@@ -21,11 +21,11 @@ function AddUpdateNote(props) {
       <Form>
         <Form.Group controlId="formTitle">
           <Form.Label>Title</Form.Label>
-          <Form.Control type="title" placeholder="Title" />
+          <Form.Control type="text" placeholder="Title" />
         </Form.Group>
         <Form.Group controlId="formDescription">
           <Form.Label>Description</Form.Label>
-          <Form.Control type="description" placeholder="Description" />
+          <Form.Control as="textarea" rows={3} placeholder="Description" />
         </Form.Group>
       </Form>
       {props.isCreate ? (
