@@ -7,6 +7,7 @@ function AddUpdateNote(props) {
       title: document.getElementById("formTitle").value,
       description: document.getElementById("formDescription").value,
       date: props.date,
+      key: Date.now(),
     });
   }
   function onAddDiscardClick() {}
@@ -21,7 +22,11 @@ function AddUpdateNote(props) {
       <Form>
         <Form.Group controlId="formTitle">
           <Form.Label>Title</Form.Label>
-          <Form.Control type="text" placeholder="Title" />
+          <Form.Control
+            type="text"
+            placeholder="Title"
+            value={props.note && props.note.title}
+          />
         </Form.Group>
         <Form.Group controlId="formDescription">
           <Form.Label>Description</Form.Label>

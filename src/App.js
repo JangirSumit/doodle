@@ -11,6 +11,7 @@ function App() {
   const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")));
   const [showAddNote, setShowAddNote] = useState(true);
   const [showUpdateNote, setShowUpdateNote] = useState(false);
+  const [editTile, setEditTile] = useState({});
 
   function onDateClick(date) {
     setDate(formatDate(date));
@@ -34,6 +35,12 @@ function App() {
     setNotes(newNotes);
   }
 
+  function onEditClick(tileKey) {
+    const selectedTile = notes.filter((n) => n.key === tileKey)[0];
+    setEditTile(selectedTile);
+    setShowUpdateNote(true);
+  }
+
   function formatDate(date) {
     return date.toLocaleDateString("en-IN", {
       day: "2-digit",
@@ -52,7 +59,7 @@ function App() {
               <Calendar onDateClick={onDateClick} />
             </Col>
             <Col xs={12} md={6}>
-              <Notes notes={notes} />
+              <Notes notes={notes} onEditClick={onEditClick} />
             </Col>
           </Row>
           <Row>
@@ -66,7 +73,7 @@ function App() {
               )}
             </Col>
             <Col xs={12} md={6}>
-              {showUpdateNote && <AddUpdateNote date={date} />}
+              {showUpdateNote && <AddUpdateNote date={date} note={editTile} />}
             </Col>
           </Row>
         </Container>

@@ -79,3 +79,7 @@ header {
   height: 344px;
   padding: 1rem;
 }
+
+.notes-wrapper .note {
+  max-height: 100px;
+}
