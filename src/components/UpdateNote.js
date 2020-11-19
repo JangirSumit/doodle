@@ -2,7 +2,23 @@ import React from "react";
 import { Button, Card, Form } from "react-bootstrap";
 
 function UpdateNote(props) {
-  function onUpdateClick() {}
+  function onUpdateClick() {
+    if (!document.getElementById("formUpdateTitle").value.trim()) {
+      alert("Please Enter Valid Title");
+    }
+
+    props.onUpdateClick({
+      title: document.getElementById("formUpdateTitle").value.trim(),
+      description: document
+        .getElementById("formUpdateDescription")
+        .value.trim(),
+      date: props.date,
+      key: props.note.key,
+    });
+    document.getElementById("formUpdateTitle").value = "";
+    document.getElementById("formUpdateDescription").value = "";
+  }
+
   function onUpdateDiscardClick() {
     props.onUpdateDiscardClick(false);
   }
@@ -16,7 +32,7 @@ function UpdateNote(props) {
           <Form.Control
             type="text"
             placeholder="Title"
-            value={props.note && props.note.title}
+            defaultValue={props.note && props.note.title}
           />
         </Form.Group>
         <Form.Group controlId="formUpdateDescription">
@@ -25,7 +41,9 @@ function UpdateNote(props) {
             as="textarea"
             rows={3}
             placeholder="Description"
-            value={props.note && props.note.description}
+            defaultValue={
+              props.note && props.note.description.substring(0, 100)
+            }
           />
         </Form.Group>
       </Form>

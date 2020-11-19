@@ -14,10 +14,10 @@ function NoteTile(props) {
       </Toast.Header>
       <Toast.Body>
         <Row>
-          <Col xs={9}>
+          <Col xs={9} style={{ paddingRight: "5px" }}>
             <small>{props.note.description}</small>
           </Col>
-          <Col xs={3}>
+          <Col xs={3} style={{ paddingLeft: "5px", textAlign: "right" }}>
             <Button onClick={() => props.onEditClick(props.note.key)}>
               Edit
             </Button>

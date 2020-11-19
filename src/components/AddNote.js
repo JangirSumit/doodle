@@ -3,9 +3,13 @@ import { Button, Card, Form } from "react-bootstrap";
 
 function AddNote(props) {
   function onAddClick() {
+    if (!document.getElementById("formAddTitle").value.trim()) {
+      alert("Please Enter Valid Title");
+    }
+
     props.onAddClick({
-      title: document.getElementById("formAddTitle").value,
-      description: document.getElementById("formAddDescription").value,
+      title: document.getElementById("formAddTitle").value.trim(),
+      description: document.getElementById("formAddDescription").value.trim(),
       date: props.date,
       key: Date.now(),
     });

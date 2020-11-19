@@ -77,6 +77,8 @@ header {
   overflow-x: hidden;
   overflow-y: auto;
   height: 344px;
+  min-height: 344px;
+  max-height: 344px;
   padding: 1rem;
 }
 

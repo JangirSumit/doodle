@@ -46,6 +46,14 @@ function App() {
     setShowUpdateNote(flag);
   }
 
+  function onUpdateClick(note) {
+    const findNote = notes.filter((n) => n.key === note.key)[0];
+    findNote.description = note.description;
+    findNote.title = note.title;
+    localStorage.setItem("notes", JSON.stringify(notes));
+    setNotes([...notes]);
+  }
+
   function onNoteDelete(tileKey) {
     setShowUpdateNote(false);
     const remainingNotes = notes.filter((n) => n.key !== tileKey);
@@ -88,6 +96,7 @@ function App() {
                   date={date}
                   note={editTile}
                   onUpdateDiscardClick={onUpdateDiscardClick}
+                  onUpdateClick={onUpdateClick}
                 />
               )}
             </Col>
