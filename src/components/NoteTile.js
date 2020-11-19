@@ -2,12 +2,8 @@ import React from "react";
 import { Button, Toast, Row, Col, Card } from "react-bootstrap";
 
 function NoteTile(props) {
-  function onEditClick() {
-    props.onEditClick(props.note.key);
-  }
-
   return (
-    <Toast className="note">
+    <Toast className="note" onClose={() => props.onNoteDelete(props.note.key)}>
       <Toast.Header>
         <strong className="mr-auto">
           {props.id}. {props.note.title}
@@ -22,7 +18,9 @@ function NoteTile(props) {
             <small>{props.note.description}</small>
           </Col>
           <Col xs={3}>
-            <Button onClick={onEditClick}>Edit</Button>
+            <Button onClick={() => props.onEditClick(props.note.key)}>
+              Edit
+            </Button>
           </Col>
         </Row>
       </Toast.Body>

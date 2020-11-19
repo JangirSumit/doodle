@@ -14,7 +14,12 @@ function Calendar(props) {
   }
 
   return (
-    <ReactCalendar onClickDay={onDateClick} onChange={onChange} value={value} />
+    <ReactCalendar
+      onClickDay={onDateClick}
+      onChange={onChange}
+      value={value}
+      defaultValue={[new Date("11/17/2020"), new Date("11/18/2020")]}
+    />
   );
 }
 

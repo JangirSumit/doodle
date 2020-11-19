@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import NoteTile from "./NoteTile";
 
-function Notes({ notes, onEditClick }) {
+function Notes({ notes, onEditClick, onNoteDelete }) {
   return (
     <Card className="notes-wrapper">
       <h3>Notes</h3>
@@ -13,6 +13,7 @@ function Notes({ notes, onEditClick }) {
             key={index}
             id={index + 1}
             onEditClick={onEditClick}
+            onNoteDelete={onNoteDelete}
           />
         ))
       ) : (

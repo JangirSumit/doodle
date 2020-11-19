@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Calendar from "./components/Calendar";
-import AddUpdateNote from "./components/AddUpdateNote";
+import AddNote from "./components/AddNote";
+import UpdateNote from "./components/UpdateNote";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Notes from "./components/Notes";
@@ -41,6 +42,17 @@ function App() {
     setShowUpdateNote(true);
   }
 
+  function onUpdateDiscardClick(flag) {
+    setShowUpdateNote(flag);
+  }
+
+  function onNoteDelete(tileKey) {
+    setShowUpdateNote(false);
+    const remainingNotes = notes.filter((n) => n.key !== tileKey);
+    localStorage.setItem("notes", JSON.stringify(remainingNotes));
+    setNotes(remainingNotes);
+  }
+
   function formatDate(date) {
     return date.toLocaleDateString("en-IN", {
       day: "2-digit",
@@ -59,21 +71,25 @@ function App() {
               <Calendar onDateClick={onDateClick} />
             </Col>
             <Col xs={12} md={6}>
-              <Notes notes={notes} onEditClick={onEditClick} />
+              <Notes
+                notes={notes}
+                onEditClick={onEditClick}
+                onNoteDelete={onNoteDelete}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12} md={6}>
-              {showAddNote && (
-                <AddUpdateNote
-                  isCreate={true}
-                  date={date}
-                  onAddClick={onAddClick}
-                />
-              )}
+              {showAddNote && <AddNote date={date} onAddClick={onAddClick} />}
             </Col>
             <Col xs={12} md={6}>
-              {showUpdateNote && <AddUpdateNote date={date} note={editTile} />}
+              {showUpdateNote && (
+                <UpdateNote
+                  date={date}
+                  note={editTile}
+                  onUpdateDiscardClick={onUpdateDiscardClick}
+                />
+              )}
             </Col>
           </Row>
         </Container>
