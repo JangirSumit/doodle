@@ -12,7 +12,7 @@ function UpdateNote(props) {
       description: document
         .getElementById("formUpdateDescription")
         .value.trim(),
-      date: props.date,
+      date: props.note.date,
       key: props.note.key,
     });
     document.getElementById("formUpdateTitle").value = "";
@@ -25,7 +25,7 @@ function UpdateNote(props) {
 
   return (
     <Card className={"update-note-wrapper"}>
-      <h3>{`Update Note (${props.date})`}</h3>
+      <h3>{`Update Note (${props.note.date})`}</h3>
       <Form>
         <Form.Group controlId="formUpdateTitle">
           <Form.Label>Title</Form.Label>

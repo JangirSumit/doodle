@@ -93,7 +93,6 @@ function App() {
             <Col xs={12} md={6}>
               {showUpdateNote && (
                 <UpdateNote
-                  date={date}
                   note={editTile}
                   onUpdateDiscardClick={onUpdateDiscardClick}
                   onUpdateClick={onUpdateClick}
@@ -103,6 +102,9 @@ function App() {
           </Row>
         </Container>
       </div>
+      <footer>
+        Copyright &copy; 2020 by Sumit Jangir. All Rights Reserved.
+      </footer>
     </>
   );
 }

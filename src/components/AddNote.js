@@ -13,9 +13,14 @@ function AddNote(props) {
       date: props.date,
       key: Date.now(),
     });
+    clear();
   }
 
   function onAddDiscardClick() {
+    clear();
+  }
+
+  function clear() {
     document.getElementById("formAddTitle").value = "";
     document.getElementById("formAddDescription").value = "";
   }

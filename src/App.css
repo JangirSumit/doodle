@@ -7,12 +7,8 @@ body {
   background: #f8fafc;
 }
 
-.react-calendar {
-  margin-bottom: 1rem;
-}
-
 .card {
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .row {
@@ -22,6 +18,8 @@ body {
 .react-calendar {
   margin: auto;
   width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  margin-bottom: 1rem;
 }
 
 header {
@@ -32,6 +30,16 @@ header {
   font-size: 35px;
   margin-bottom: 1rem;
   color: #ffffff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+footer {
+  color: rgb(255, 255, 255);
+  background-color: rgb(40, 44, 52);
+  height: 100px;
+  margin: auto;
+  text-align: center;
+  line-height: 100px;
 }
 
 .react-calendar__navigation__label {
@@ -41,6 +49,11 @@ header {
 .notes-wrapper .note {
   width: 99%;
   max-width: 99%;
+}
+
+.App {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 @media screen and (max-width: 1200px) {
@@ -58,6 +71,21 @@ header {
   .react-calendar {
     margin-bottom: 1rem;
   }
+
+  .App {
+    height: calc(100vh - 136px);
+  }
+
+  footer {
+    height: 60px;
+    line-height: 60px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .add-note-wrapper {
+    margin-bottom: 1rem;
+  }
 }
 
 @media screen and (min-width: 1200px) {
@@ -68,6 +96,15 @@ header {
   }
 
   header {
+    height: 100px;
+    line-height: 100px;
+  }
+
+  .App {
+    height: calc(100vh - 216px);
+  }
+
+  footer {
     height: 100px;
     line-height: 100px;
   }
