@@ -1,26 +1,32 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import ReactCalendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { changeDate, setDate } from "../actions";
 
 function Calendar(props) {
-  const [value, setValue] = useState(new Date());
-
-  function onChange(nextValue) {
-    setValue(nextValue);
-  }
-
   function onDateClick(date) {
     props.onDateClick(date);
   }
 
   return (
     <ReactCalendar
-      onClickDay={onDateClick}
-      onChange={onChange}
-      value={value}
-      defaultValue={[new Date("11/17/2020"), new Date("11/18/2020")]}
+      onClickDay={(date) => props.setDate(date)}
+      onChange={(nextValue) => props.changeDate(nextValue)}
+      value={props.value}
     />
   );
 }
 
-export default Calendar;
+const mapStateToProps = (state) => {
+  return { value: state.date.value };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeDate: (nextValue) => dispatch(changeDate(nextValue)),
+    setDate: (date) => dispatch(setDate(date)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

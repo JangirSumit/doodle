@@ -1,9 +1,11 @@
 import React from "react";
 import { Button, Toast, Row, Col, Card } from "react-bootstrap";
+import { connect } from "react-redux";
+import { deleteNote, showUpdateNote } from "../actions";
 
 function NoteTile(props) {
   return (
-    <Toast className="note" onClose={() => props.onNoteDelete(props.note.key)}>
+    <Toast className="note" onClose={() => props.deleteNote(props.note.key)}>
       <Toast.Header>
         <strong className="mr-auto">
           {props.id}. {props.note.title}
@@ -18,7 +20,7 @@ function NoteTile(props) {
             <small>{props.note.description}</small>
           </Col>
           <Col xs={3} style={{ paddingLeft: "5px", textAlign: "right" }}>
-            <Button onClick={() => props.onEditClick(props.note.key)}>
+            <Button onClick={() => props.showUpdateNote(props.note.key)}>
               Edit
             </Button>
           </Col>
@@ -28,4 +30,15 @@ function NoteTile(props) {
   );
 }
 
-export default NoteTile;
+const mapStateToProps = (state, ownProps) => {
+  return ownProps;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteNote: (tileKey) => dispatch(deleteNote(tileKey)),
+    showUpdateNote: (tileKey) => dispatch(showUpdateNote(tileKey)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteTile);

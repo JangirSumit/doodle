@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { addNote } from "../actions";
 import { Button, Card, Form } from "react-bootstrap";
 
 function AddNote(props) {
@@ -7,7 +9,7 @@ function AddNote(props) {
       alert("Please Enter Valid Title");
     }
 
-    props.onAddClick({
+    props.addNote({
       title: document.getElementById("formAddTitle").value.trim(),
       description: document.getElementById("formAddDescription").value.trim(),
       date: props.date,
@@ -50,4 +52,16 @@ function AddNote(props) {
   );
 }
 
-export default AddNote;
+const mapStateToProps = (state) => {
+  return {
+    date: state.note.date,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNote: (data) => dispatch(addNote(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddNote);

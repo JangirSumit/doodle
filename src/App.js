@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import Calendar from "./components/Calendar";
 import AddNote from "./components/AddNote";
 import UpdateNote from "./components/UpdateNote";
@@ -7,68 +8,7 @@ import "./App.css";
 import Notes from "./components/Notes";
 import { Col, Container, Row } from "react-bootstrap";
 
-function App() {
-  const [date, setDate] = useState(formatDate(new Date()));
-  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")));
-  const [showAddNote, setShowAddNote] = useState(true);
-  const [showUpdateNote, setShowUpdateNote] = useState(false);
-  const [editTile, setEditTile] = useState({});
-
-  function onDateClick(date) {
-    setDate(formatDate(date));
-  }
-
-  function onAddClick(data) {
-    let notes = localStorage.getItem("notes");
-    let newNotes = [];
-    if (notes && notes.length) {
-      localStorage.removeItem("notes");
-    }
-
-    if (!notes) {
-      newNotes = [data];
-    } else {
-      notes = JSON.parse(notes);
-      newNotes = [...notes, data];
-    }
-
-    localStorage.setItem("notes", JSON.stringify(newNotes));
-    setNotes(newNotes);
-  }
-
-  function onEditClick(tileKey) {
-    const selectedTile = notes.filter((n) => n.key === tileKey)[0];
-    setEditTile(selectedTile);
-    setShowUpdateNote(true);
-  }
-
-  function onUpdateDiscardClick(flag) {
-    setShowUpdateNote(flag);
-  }
-
-  function onUpdateClick(note) {
-    const findNote = notes.filter((n) => n.key === note.key)[0];
-    findNote.description = note.description;
-    findNote.title = note.title;
-    localStorage.setItem("notes", JSON.stringify(notes));
-    setNotes([...notes]);
-  }
-
-  function onNoteDelete(tileKey) {
-    setShowUpdateNote(false);
-    const remainingNotes = notes.filter((n) => n.key !== tileKey);
-    localStorage.setItem("notes", JSON.stringify(remainingNotes));
-    setNotes(remainingNotes);
-  }
-
-  function formatDate(date) {
-    return date.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-  }
-
+function App(props) {
   return (
     <>
       <header>Doodle</header>
@@ -76,28 +16,18 @@ function App() {
         <Container>
           <Row>
             <Col xs={12} md={6}>
-              <Calendar onDateClick={onDateClick} />
+              <Calendar />
             </Col>
             <Col xs={12} md={6}>
-              <Notes
-                notes={notes}
-                onEditClick={onEditClick}
-                onNoteDelete={onNoteDelete}
-              />
+              <Notes />
             </Col>
           </Row>
           <Row>
             <Col xs={12} md={6}>
-              {showAddNote && <AddNote date={date} onAddClick={onAddClick} />}
+              <AddNote />
             </Col>
             <Col xs={12} md={6}>
-              {showUpdateNote && (
-                <UpdateNote
-                  note={editTile}
-                  onUpdateDiscardClick={onUpdateDiscardClick}
-                  onUpdateClick={onUpdateClick}
-                />
-              )}
+              {props.showUpdateNote && <UpdateNote />}
             </Col>
           </Row>
         </Container>
@@ -109,4 +39,12 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    date: state.note.date,
+    notes: state.note.notes,
+    showUpdateNote: state.note.showUpdateNote,
+  };
+};
+
+export default connect(mapStateToProps)(App);

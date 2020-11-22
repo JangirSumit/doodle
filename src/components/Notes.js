@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Card } from "react-bootstrap";
 import NoteTile from "./NoteTile";
 
@@ -8,13 +9,7 @@ function Notes({ notes, onEditClick, onNoteDelete }) {
       <h3>Notes</h3>
       {notes && notes.length ? (
         notes.map((n, index) => (
-          <NoteTile
-            note={n}
-            key={index}
-            id={index + 1}
-            onEditClick={onEditClick}
-            onNoteDelete={onNoteDelete}
-          />
+          <NoteTile note={n} key={index} id={index + 1} />
         ))
       ) : (
         <div style={{ textAlign: "center" }}>
@@ -26,4 +21,10 @@ function Notes({ notes, onEditClick, onNoteDelete }) {
   );
 }
 
-export default Notes;
+const mapStateToProps = (state) => {
+  return {
+    notes: state.note.notes,
+  };
+};
+
+export default connect(mapStateToProps)(Notes);

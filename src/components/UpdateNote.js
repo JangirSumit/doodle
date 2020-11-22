@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { connect } from "react-redux";
+import { updateNote, showUpdateNote } from "../actions";
 
 function UpdateNote(props) {
   function onUpdateClick() {
@@ -7,7 +9,7 @@ function UpdateNote(props) {
       alert("Please Enter Valid Title");
     }
 
-    props.onUpdateClick({
+    props.updateNote({
       title: document.getElementById("formUpdateTitle").value.trim(),
       description: document
         .getElementById("formUpdateDescription")
@@ -17,10 +19,6 @@ function UpdateNote(props) {
     });
     document.getElementById("formUpdateTitle").value = "";
     document.getElementById("formUpdateDescription").value = "";
-  }
-
-  function onUpdateDiscardClick() {
-    props.onUpdateDiscardClick(false);
   }
 
   return (
@@ -51,7 +49,7 @@ function UpdateNote(props) {
         <Button variant="primary" onClick={onUpdateClick}>
           Update
         </Button>{" "}
-        <Button variant="secondary" onClick={onUpdateDiscardClick}>
+        <Button variant="secondary" onClick={showUpdateNote}>
           Discard
         </Button>
       </p>
@@ -59,4 +57,17 @@ function UpdateNote(props) {
   );
 }
 
-export default UpdateNote;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    note: state.note.editTile,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateNote: (data) => dispatch(updateNote(data)),
+    showUpdateNote: () => dispatch(showUpdateNote()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateNote);
