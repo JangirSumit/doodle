@@ -7,6 +7,7 @@ function AddNote(props) {
   function onAddClick() {
     if (!document.getElementById("formAddTitle").value.trim()) {
       alert("Please Enter Valid Title");
+      return false;
     }
 
     props.addNote({

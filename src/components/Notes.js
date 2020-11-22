@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Card } from "react-bootstrap";
 import NoteTile from "./NoteTile";
 
-function Notes({ notes, onEditClick, onNoteDelete }) {
+function Notes({ notes }) {
   return (
     <Card className="notes-wrapper">
       <h3>Notes</h3>

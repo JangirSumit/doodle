@@ -5,10 +5,6 @@ import "react-calendar/dist/Calendar.css";
 import { changeDate, setDate } from "../actions";
 
 function Calendar(props) {
-  function onDateClick(date) {
-    props.onDateClick(date);
-  }
-
   return (
     <ReactCalendar
       onClickDay={(date) => props.setDate(date)}

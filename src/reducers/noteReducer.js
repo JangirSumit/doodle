@@ -37,20 +37,24 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         showUpdateNote: !!action.payload,
-        editTile:
-          action.payload &&
-          state.notes.filter((n) => n.key === action.payload)[0],
+        editTile: action.payload && {
+          ...state.notes.filter((n) => n.key === action.payload)[0],
+        },
       };
     case UPDATE_NOTE:
-      const findNote = state.notes.filter(
-        (n) => n.key === action.payload.key
-      )[0];
-      findNote.description = action.payload.description;
-      findNote.title = action.payload.title;
+      const newNotes = state.notes.map((note) => {
+        if (note.key === action.payload.key) {
+          note.description = action.payload.description;
+          note.title = action.payload.title;
+          return { ...note };
+        }
+        return note;
+      });
 
       return {
         ...state,
-        notes: [...state.notes],
+        showUpdateNote: false,
+        notes: [...newNotes],
       };
     default:
       return state;

@@ -7,6 +7,7 @@ function UpdateNote(props) {
   function onUpdateClick() {
     if (!document.getElementById("formUpdateTitle").value.trim()) {
       alert("Please Enter Valid Title");
+      return false;
     }
 
     props.updateNote({
@@ -49,7 +50,7 @@ function UpdateNote(props) {
         <Button variant="primary" onClick={onUpdateClick}>
           Update
         </Button>{" "}
-        <Button variant="secondary" onClick={showUpdateNote}>
+        <Button variant="secondary" onClick={props.showUpdateNote}>
           Discard
         </Button>
       </p>
@@ -66,7 +67,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateNote: (data) => dispatch(updateNote(data)),
-    showUpdateNote: () => dispatch(showUpdateNote()),
+    showUpdateNote: () => dispatch(showUpdateNote(false)),
   };
 };
 
