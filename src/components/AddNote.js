@@ -1,21 +1,26 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addNote } from "../actions";
 import { Button, Card, Form } from "react-bootstrap";
 
-function AddNote(props) {
+function AddNote() {
+  const date = useSelector((state) => state.note.date);
+  const dispatch = useDispatch();
+
   function onAddClick() {
     if (!document.getElementById("formAddTitle").value.trim()) {
       alert("Please Enter Valid Title");
       return false;
     }
 
-    props.addNote({
-      title: document.getElementById("formAddTitle").value.trim(),
-      description: document.getElementById("formAddDescription").value.trim(),
-      date: props.date,
-      key: Date.now(),
-    });
+    dispatch(
+      addNote({
+        title: document.getElementById("formAddTitle").value.trim(),
+        description: document.getElementById("formAddDescription").value.trim(),
+        date: date,
+        key: Date.now(),
+      })
+    );
     clear();
   }
 
@@ -30,7 +35,7 @@ function AddNote(props) {
 
   return (
     <Card className={"add-note-wrapper"}>
-      <h3>{`Add Note (${props.date})`}</h3>
+      <h3>{`Add Note (${date})`}</h3>
       <Form>
         <Form.Group controlId="formAddTitle">
           <Form.Label>Title</Form.Label>
@@ -53,16 +58,4 @@ function AddNote(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    date: state.note.date,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addNote: (data) => dispatch(addNote(data)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddNote);
+export default AddNote;

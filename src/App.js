@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import Calendar from "./components/Calendar";
 import AddNote from "./components/AddNote";
 import UpdateNote from "./components/UpdateNote";
@@ -8,7 +8,9 @@ import "./App.css";
 import Notes from "./components/Notes";
 import { Col, Container, Row } from "react-bootstrap";
 
-function App(props) {
+function App() {
+  const showUpdateNote = useSelector((state) => state.note.showUpdateNote);
+
   return (
     <>
       <header>Doodle</header>
@@ -27,7 +29,7 @@ function App(props) {
               <AddNote />
             </Col>
             <Col xs={12} md={6}>
-              {props.showUpdateNote && <UpdateNote />}
+              {showUpdateNote && <UpdateNote />}
             </Col>
           </Row>
         </Container>
@@ -39,12 +41,4 @@ function App(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    date: state.note.date,
-    notes: state.note.notes,
-    showUpdateNote: state.note.showUpdateNote,
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Card, ButtonGroup, Button, Row, Col } from "react-bootstrap";
 import NoteTile from "./NoteTile";
 
-function Notes(props) {
+function Notes() {
+  const notes = useSelector((state) => state.note.notes);
+
   const [showNotes, setshowNotes] = useState({
     active: 1,
-    notes: props.notes,
+    notes: notes,
   });
 
   useEffect(() => {
@@ -24,14 +26,14 @@ function Notes(props) {
         showCurrentNotes();
         break;
     }
-  }, [props.notes]);
+  }, [notes]);
 
   function showCurrentNotes() {
     const today = new Date();
     setshowNotes({
       active: 1,
       notes: [
-        ...props.notes.filter(
+        ...notes.filter(
           (n) =>
             Date.parse(n.date) ===
             Date.parse(
@@ -49,7 +51,7 @@ function Notes(props) {
     setshowNotes({
       active: 0,
       notes: [
-        ...props.notes.filter(
+        ...notes.filter(
           (n) =>
             Date.parse(n.date) <
             Date.parse(
@@ -67,7 +69,7 @@ function Notes(props) {
     setshowNotes({
       active: 2,
       notes: [
-        ...props.notes.filter(
+        ...notes.filter(
           (n) =>
             Date.parse(n.date) >
             Date.parse(
@@ -126,18 +128,4 @@ function Notes(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    notes: state.note.notes,
-  };
-};
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     showCurrentNotes: () => dispatch(showCurrentNotes()),
-//     showPastNotes: () => dispatch(showPastNotes()),
-//     showFutureNotes: () => dispatch(showFutureNotes()),
-//   };
-// };
-
-export default connect(mapStateToProps)(Notes);
+export default Notes;
