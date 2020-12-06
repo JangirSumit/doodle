@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { Card, ButtonGroup, Button, Row, Col } from "react-bootstrap";
 import NoteTile from "./NoteTile";
@@ -10,6 +10,60 @@ function Notes() {
     active: 1,
     notes: notes,
   });
+
+  const showCurrentNotes = useCallback(() => {
+    const today = new Date();
+    setshowNotes({
+      active: 1,
+      notes: [
+        ...notes.filter(
+          (n) =>
+            Date.parse(n.date) ===
+            Date.parse(
+              `${
+                today.getMonth() + 1
+              }/${today.getDate()}/${today.getFullYear()}`
+            )
+        ),
+      ],
+    });
+  }, [notes]);
+
+  const showPastNotes = useCallback(() => {
+    const today = new Date();
+    setshowNotes({
+      active: 0,
+      notes: [
+        ...notes.filter(
+          (n) =>
+            Date.parse(n.date) <
+            Date.parse(
+              `${
+                today.getMonth() + 1
+              }/${today.getDate()}/${today.getFullYear()}`
+            )
+        ),
+      ],
+    });
+  }, [notes]);
+
+  const showFutureNotes = useCallback(() => {
+    const today = new Date();
+    setshowNotes({
+      active: 2,
+      notes: [
+        ...notes.filter(
+          (n) =>
+            Date.parse(n.date) >
+            Date.parse(
+              `${
+                today.getMonth() + 1
+              }/${today.getDate()}/${today.getFullYear()}`
+            )
+        ),
+      ],
+    });
+  }, [notes]);
 
   useEffect(() => {
     switch (showNotes.active) {
@@ -26,61 +80,13 @@ function Notes() {
         showCurrentNotes();
         break;
     }
-  }, [notes]);
-
-  function showCurrentNotes() {
-    const today = new Date();
-    setshowNotes({
-      active: 1,
-      notes: [
-        ...notes.filter(
-          (n) =>
-            Date.parse(n.date) ===
-            Date.parse(
-              `${
-                today.getMonth() + 1
-              }/${today.getDate()}/${today.getFullYear()}`
-            )
-        ),
-      ],
-    });
-  }
-
-  function showPastNotes() {
-    const today = new Date();
-    setshowNotes({
-      active: 0,
-      notes: [
-        ...notes.filter(
-          (n) =>
-            Date.parse(n.date) <
-            Date.parse(
-              `${
-                today.getMonth() + 1
-              }/${today.getDate()}/${today.getFullYear()}`
-            )
-        ),
-      ],
-    });
-  }
-
-  function showFutureNotes() {
-    const today = new Date();
-    setshowNotes({
-      active: 2,
-      notes: [
-        ...notes.filter(
-          (n) =>
-            Date.parse(n.date) >
-            Date.parse(
-              `${
-                today.getMonth() + 1
-              }/${today.getDate()}/${today.getFullYear()}`
-            )
-        ),
-      ],
-    });
-  }
+  }, [
+    showNotes.active,
+    notes,
+    showCurrentNotes,
+    showFutureNotes,
+    showPastNotes,
+  ]);
 
   return (
     <Card className="notes-wrapper">
