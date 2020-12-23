@@ -1,8 +1,14 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, fireEvent } from "@testing-library/react";
+import { useSelector } from "react-redux";
+import App from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useSelector: jest.fn(),
+}));
+
+describe("App", () => {
+  it("test", () => {
+    expect(true).toEqual(true);
+  });
 });
